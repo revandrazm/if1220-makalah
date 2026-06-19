@@ -1,5 +1,6 @@
 import random
 import time
+from simulation1 import schnorr_honest
 
 PARAMETERS = [
     ("Small", 23, 11, 2),
