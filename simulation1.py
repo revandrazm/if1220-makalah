@@ -21,18 +21,18 @@ def schnorr_dishonest(p, q, g, y, c):
     rhs = (R_fake * pow(y, c_verifier, p)) % p
     return lhs == rhs
 
+if __name__ == "__main__":
+    # Honest prover test case
+    p, q, g = 23, 11, 2
+    x, r, c = 3, 7, 4
+    status = schnorr_honest(p, q, g, x, r, c)
 
-# Honest prover test case
-p, q, g = 23, 11, 2
-x, r, c = 3, 7, 4
-status = schnorr_honest(p, q, g, x, r, c)
+    print(f"Honest status: {status}")
 
-print(f"Honest status: {status}")
+    # Dishonest prover test case
+    p, q, g = 23, 11, 2
+    c = 4
+    y = pow(g, x, p)
+    correct = sum(schnorr_dishonest(p, q, g, y, c) for _ in range(1000))
 
-# Dishonest prover test case
-p, q, g = 23, 11, 2
-c = 4
-y = pow(g, x, p)
-correct = sum(schnorr_dishonest(p, q, g, y, c) for _ in range(1000))
-
-print(f"Dishonest success rate: {correct / 1000:.4f} (theoretical 1/q ≈ {1 / q:.4f})")
+    print(f"Dishonest success rate: {correct / 1000:.4f} (theoretical 1/q ≈ {1 / q:.4f})")
